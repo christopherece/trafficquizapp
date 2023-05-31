@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from questions.models import Question, Option
 from django.http import JsonResponse
+import random
 
 def index(request):
-    questions = Question.objects.all()
+    questions = Question.objects.all().order_by('?') 
+
     context = {
         'questions': questions
     }
@@ -12,6 +14,8 @@ def index(request):
 # views.py
 from django.shortcuts import render, redirect
 from questions.models import Question, Option
+
+from django.core.exceptions import ObjectDoesNotExist
 
 def submit_quiz(request):
     if request.method == 'POST':
@@ -23,23 +27,30 @@ def submit_quiz(request):
 
         for question in Question.objects.all():
             selected_option_id = request.POST.get(f'q{question.id}')
-            selected_option = Option.objects.get(id=selected_option_id)
-            if selected_option.is_correct:
+            try:
+                selected_option = Option.objects.get(id=selected_option_id)
+            except ObjectDoesNotExist:
+                # Handle the case when the Option object does not exist
+                # You can display an error message or handle it based on your requirements
+                selected_option = None
+
+            if selected_option and selected_option.is_correct:
                 score += 1
+
             answers.append({
                 'question': question.text,
-                'selected_option': selected_option.text,
-                'is_correct': selected_option.is_correct,
+                'selected_option': selected_option.text if selected_option else 'N/A',
+                'is_correct': selected_option.is_correct if selected_option else False,
                 'explanation': question.explanation
             })
 
         # Calculate the score percentage
-        score_percentage = round((score / total_questions) * 100,2)
+        score_percentage = round((score / total_questions) * 100, 2)
         context = {
             'score': score,
             'total_questions': total_questions,
             'answers': answers,
-            'score_percentage':score_percentage,
+            'score_percentage': score_percentage,
         }
         return render(request, 'pages/result.html', context)
 

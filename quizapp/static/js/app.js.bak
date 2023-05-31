@@ -1,7 +1,6 @@
 const date = new Date();
 document.querySelector('.year').innerHTML = date.getFullYear();
 
-
 let questions = document.querySelectorAll('.question');
 const nextBtns = document.querySelectorAll('.nextBtn');
 const submitBtn = document.querySelector('#submitBtn');
@@ -9,62 +8,24 @@ const submitBtn = document.querySelector('#submitBtn');
 let currentQuestion = 0;
 let score = 0;
 
-
 function showQuestion(index) {
     questions[currentQuestion].classList.remove('active');
     questions[index].classList.add('active');
     currentQuestion = index;
     updateButtonVisibility();
-
 }
-function updateButtonVisibility() {
-  const selectedOption = document.querySelector('input[type="radio"]:checked');
-
-  nextBtns.forEach((btn, index) => {
-    if (index === currentQuestion) {
-      btn.style.display = 'none'; // Hide the current question's "Next" button
-    } else {
-      btn.style.display = 'block'; // Show other "Next" buttons
-    }
-  });
-
-  if (currentQuestion === questions.length - 1) {
-    nextBtns[currentQuestion].style.display = 'none'; // Hide the last "Next" button on the last question
-  }
-
-  if (selectedOption) {
-    nextBtns[currentQuestion].style.display = 'block'; // Show the "Next" button when an option is selected
-  }
-}
-
-  
 
 function handleNextClick() {
-    if (currentQuestion < questions.length - 1) {
-        const selectedOption = document.querySelector('input[type="radio"]:checked');
-        console.log(selectedOption);
+    const selectedOption = document.querySelector('input[type="radio"]:checked');
+    console.log(selectedOption);
 
-        if (selectedOption) {
-            showQuestion(currentQuestion + 1);
-
-        } else {
-            alert('Please select an option before proceeding.');
-        }
+    if (selectedOption) {
+        showQuestion(currentQuestion + 1);
+        selectedOption.checked = false; // Clear the selected option
     } else {
-        submitBtn.style.display = 'block';
-        nextBtns.forEach(btn => btn.style.display = 'none');
-    }
-    
-    // Check if a radio button is selected
-    const radioSelected = document.querySelector('input[type="radio"]:checked');
-    if (radioSelected) {
-        // Get the name of the radio button
-        const radioName = radioSelected.name;
-        console.log(radioName);
+        alert('Please select an option before proceeding.');
     }
 }
-
-
 
 function showResult() {
     // Redirect to the result page with parameters
@@ -103,13 +64,42 @@ function handleFormSubmit() {
     });
 }
 
+function updateButtonVisibility() {
+    const selectedOption = document.querySelector('input[type="radio"]:checked');
+  
+    nextBtns.forEach((btn, index) => {
+      if (index === currentQuestion) {
+        btn.style.display = 'none'; // Hide the current question's "Next" button
+      } else {
+        btn.style.display = 'block'; // Show other "Next" buttons
+      }
+    });
+  
+    if (currentQuestion === questions.length - 1) {
+      nextBtns[currentQuestion].style.display = 'none'; // Hide the last "Next" button on the last question
+      submitBtn.style.display = 'block'; // Show the submit button on the last question
+    } else {
+      submitBtn.style.display = 'none'; // Hide the submit button for other questions
+    }
+  
+    if (selectedOption) {
+      nextBtns[currentQuestion].style.display = 'block'; // Show the "Next" button when an option is selected
+    }
+  }
+  
+
 function attachNextButtonListeners() {
-    nextBtns.forEach(btn => btn.addEventListener('click', handleNextClick));
+    nextBtns.forEach(btn => {
+        btn.addEventListener('click', handleNextClick);
+        btn.style.display = 'none';
+    });
+
+    submitBtn.addEventListener('click', handleFormSubmit);
+    submitBtn.style.display = 'none'; // Hide the submit button initially
 }
 
-submitBtn.addEventListener('click', handleFormSubmit);
 showQuestion(0);  // Show the first question initially
-attachNextButtonListeners(); // Attach event listeners to the initial next buttons
+attachNextButtonListeners(); // Attach event listeners to the next buttons and submit button
 
 // Update button visibility when an option is selected or deselected
 document.querySelectorAll('input[type="radio"]').forEach(option => {

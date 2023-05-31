@@ -14,7 +14,30 @@ function showQuestion(index) {
     questions[currentQuestion].classList.remove('active');
     questions[index].classList.add('active');
     currentQuestion = index;
+    updateButtonVisibility();
+
 }
+function updateButtonVisibility() {
+  const selectedOption = document.querySelector('input[type="radio"]:checked');
+
+  nextBtns.forEach((btn, index) => {
+    if (index === currentQuestion) {
+      btn.style.display = 'none'; // Hide the current question's "Next" button
+    } else {
+      btn.style.display = 'block'; // Show other "Next" buttons
+    }
+  });
+
+  if (currentQuestion === questions.length - 1) {
+    nextBtns[currentQuestion].style.display = 'none'; // Hide the last "Next" button on the last question
+  }
+
+  if (selectedOption) {
+    nextBtns[currentQuestion].style.display = 'block'; // Show the "Next" button when an option is selected
+  }
+}
+
+  
 
 function handleNextClick() {
     if (currentQuestion < questions.length - 1) {
@@ -23,6 +46,7 @@ function handleNextClick() {
 
         if (selectedOption) {
             showQuestion(currentQuestion + 1);
+
         } else {
             alert('Please select an option before proceeding.');
         }
@@ -86,3 +110,8 @@ function attachNextButtonListeners() {
 submitBtn.addEventListener('click', handleFormSubmit);
 showQuestion(0);  // Show the first question initially
 attachNextButtonListeners(); // Attach event listeners to the initial next buttons
+
+// Update button visibility when an option is selected or deselected
+document.querySelectorAll('input[type="radio"]').forEach(option => {
+    option.addEventListener('change', updateButtonVisibility);
+});
