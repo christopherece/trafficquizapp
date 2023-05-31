@@ -15,6 +15,7 @@ function showQuestion(index) {
     questions[index].classList.add('active');
     currentQuestion = index;
     updateButtonVisibility();
+    console.log(questions.length)
 
 }
 function updateButtonVisibility() {
@@ -68,6 +69,8 @@ function handleNextClick() {
 
 function showResult() {
     // Redirect to the result page with parameters
+    console.log(questions.length)
+
     const url = `/result/${score}/${questions.length}/${encodeURIComponent(JSON.stringify(correctAnswers))}`;
     window.location.href = url;
 }

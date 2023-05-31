@@ -15,6 +15,7 @@ function showQuestion(index) {
     questions[index].classList.add('active');
     currentQuestion = index;
     updateButtonVisibility();
+    console.log(questions.length)
 
 }
 function updateButtonVisibility() {
@@ -66,9 +67,12 @@ function handleNextClick() {
 
 
 
-function showResult() {
+function showResult(total_questions) {
     // Redirect to the result page with parameters
-    const url = `/result/${score}/${questions.length}/${encodeURIComponent(JSON.stringify(correctAnswers))}`;
+    console.log(questions.length)
+    total_questions = parseInt(total_questions);
+
+    const url = `/result/${score}/${parseInt(total_questions)}/${encodeURIComponent(JSON.stringify(correctAnswers))}`;
     window.location.href = url;
 }
 
@@ -96,7 +100,7 @@ function handleFormSubmit() {
     })
     .then(response => response.json())
     .then(data => {
-        showResult();
+        showResult(questions.length);
     })
     .catch(error => {
         console.error('An error occurred:', error);

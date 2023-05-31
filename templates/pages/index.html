@@ -17,6 +17,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="q{{ question.id }}" value="{{ option.id }}" data-correct="{{ option.is_correct }}">
                                         <label class="form-check-label">{{ option.text }}</label>
+
                                     </div>
                                 {% endfor %}
                                 <p></p>
@@ -28,6 +29,8 @@
                                 <img src="{{ question.photo_main.url }}" alt="Image" class="img-fluid">
                             {% endif %}
                         </div>
+                        <input type="hidden" name="total_questions" value="{{ questions|length }}">
+
                     </div>
                 </div>
                 {% endfor %}

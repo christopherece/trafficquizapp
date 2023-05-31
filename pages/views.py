@@ -4,10 +4,12 @@ from django.http import JsonResponse
 import random
 
 def index(request):
-    questions = Question.objects.all().order_by('?') 
+    questions = list(Question.objects.all())
+    random.shuffle(questions)
+    random_questions = questions[:5]  # Change the number (5) to the desired number of random questions to display
 
     context = {
-        'questions': questions
+        'questions': random_questions
     }
     return render(request, 'pages/index.html', context)
 
@@ -22,8 +24,10 @@ def submit_quiz(request):
         # Process submitted answers and calculate the score
         score = 0
         answers = []
+        total_questions = 0
 
-        total_questions = Question.objects.count()
+        total_questions_str = request.POST.get('total_questions')
+        total_questions = int(total_questions_str)
 
         for question in Question.objects.all():
             selected_option_id = request.POST.get(f'q{question.id}')
