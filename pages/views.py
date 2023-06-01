@@ -6,7 +6,7 @@ import random
 def index(request):
     questions = list(Question.objects.all())
     random.shuffle(questions)
-    random_questions = questions[:5]  # Change the number (5) to the desired number of random questions to display
+    random_questions = questions[:15]  # Change the number (5) to the desired number of random questions to display
 
     context = {
         'questions': random_questions

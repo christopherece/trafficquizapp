@@ -8,12 +8,10 @@
             <div id="questionContainer" class="position-relative">
                 {% for question in questions %}
                 <div class="card mt-3 question">
-                    <div class="card-header" style="background-color: #90EE90">
-                        <h2 class="card-title" >Question {{ forloop.counter }}</h2>
-                    </div>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="card-body">
+                                <h2 class="card-title">Question {{ forloop.counter }}</h2>
                                 <p class="card-text">{{ question.text }}</p>
                                 {% for option in question.options.all %}
                                     <div class="form-check">
@@ -21,6 +19,8 @@
                                         <label class="form-check-label">{{ option.text }}</label>
                                     </div>
                                 {% endfor %}
+                                <p></p>
+                                <button type="button" class="btn btn-primary nextBtn">Next</button>
                             </div>
                         </div>
                         <div class="col-md-4 d-flex align-items-center justify-content-center">
@@ -32,11 +32,10 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="card-footer" style="padding:0; margin:0">
-                <input type="hidden" name="total_questions" value="{{ questions|length }}">
-                <button type="button" class="btn btn-primary form-control nextBtn">Next</button>
-                <button type="submit" class="btn btn-primary form-control" id="submitBtn" style="display: none;">Submit</button>
-            </div>
+            <p></p>
+                        <input type="hidden" name="total_questions" value="{{ questions|length }}">
+            <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">Submit</button>
+            <p></p>
         </form>
     </div>
 
