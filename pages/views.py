@@ -5,17 +5,13 @@ import random
 
 def index(request):
     questions = list(Question.objects.all())
-    random.shuffle(questions)
-    random_questions = questions[:5]  # Change the number (5) to the desired number of random questions to display
+    # random.shuffle(questions)
+    # random_questions = questions[:5]  # Change the number (5) to the desired number of random questions to display
 
     context = {
-        'questions': random_questions
+        'questions': questions
     }
     return render(request, 'pages/index.html', context)
-
-# views.py
-from django.shortcuts import render, redirect
-from questions.models import Question, Option
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -26,8 +22,9 @@ def submit_quiz(request):
         answers = []
         total_questions = 0
 
-        total_questions_str = request.POST.get('total_questions')
-        total_questions = int(total_questions_str)
+        total_questions = request.POST.get('total_questions')
+        # total_questions = int(total_questions_str)
+        print(total_questions)
 
         for question in Question.objects.all():
             selected_option_id = request.POST.get(f'q{question.id}')
@@ -49,7 +46,7 @@ def submit_quiz(request):
             })
 
         # Calculate the score percentage
-        score_percentage = round((score / total_questions) * 100, 2)
+        score_percentage = round((score / int(total_questions)) * 100, 2)
         context = {
             'score': score,
             'total_questions': total_questions,
@@ -60,6 +57,9 @@ def submit_quiz(request):
 
     else:
         return redirect('index')
+
+
+
 
 
 

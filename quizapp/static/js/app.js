@@ -39,32 +39,33 @@ function updateButtonVisibility() {
 }
 
   
-
 function handleNextClick() {
     if (currentQuestion < questions.length - 1) {
-        const selectedOption = document.querySelector('input[type="radio"]:checked');
+      const currentQuestionElement = questions[currentQuestion];
+      const selectedOption = currentQuestionElement.querySelector('input[type="radio"]:checked');
+  
+      if (selectedOption) {
         console.log(selectedOption);
 
-        if (selectedOption) {
-            showQuestion(currentQuestion + 1);
-
-        } else {
-            alert('Please select an option before proceeding.');
-        }
+        showQuestion(currentQuestion + 1);
+      } else {
+        alert('Please select an option before proceeding.');
+      }
     } else {
-        submitBtn.style.display = 'block';
-        nextBtns.forEach(btn => btn.style.display = 'none');
+      submitBtn.style.display = 'block';
+      nextBtns.forEach(btn => btn.style.display = 'none');
     }
-    
+  
     // Check if a radio button is selected
-    const radioSelected = document.querySelector('input[type="radio"]:checked');
-    if (radioSelected) {
-        // Get the name of the radio button
-        const radioName = radioSelected.name;
-        console.log(radioName);
+    const currentQuestionElement = questions[currentQuestion];
+    const selectedOption = currentQuestionElement.querySelector('input[type="radio"]:checked');
+    if (selectedOption) {
+      // Get the name of the radio button
+      const radioName = selectedOption.name;
+      console.log(radioName);
     }
-}
-
+  }
+  
 
 
 function showResult(total_questions) {
@@ -100,7 +101,7 @@ function handleFormSubmit() {
     })
     .then(response => response.json())
     .then(data => {
-        showResult(questions.length);
+        showResult();
     })
     .catch(error => {
         console.error('An error occurred:', error);
