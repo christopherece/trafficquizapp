@@ -81,8 +81,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'quizapp_tbl',
         'USER': 'postgres',
-        'PASSWORD': '011258',
-        'HOST':'127.0.0.1',
+        'PASSWORD': '!pass1234',
+        'HOST':'192.168.10.225',
         'PORT': '5432',
     }
 }
