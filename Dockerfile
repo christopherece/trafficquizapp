@@ -5,10 +5,9 @@ RUN apt-get update && apt-get install -y libpq-dev
 
 WORKDIR /home/meztroinhinyero/django/trafficquizapp
 
-COPY /requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY trafficquizapp .
 COPY . .
 
 ENV DATABASE_HOST=192.168.10.225
