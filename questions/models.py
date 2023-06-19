@@ -1,7 +1,10 @@
 from django.db import models
+from category.models import Category
 
 # Create your models here.
+
 class Question(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, blank=True, null=True)
     text = models.TextField()
     explanation = models.TextField(blank=True, null=True)
     photo_main = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)

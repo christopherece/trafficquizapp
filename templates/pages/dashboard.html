@@ -2,68 +2,30 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-sm-4" style="padding: 20px">
-            <a href="{% url 'drive_exam' %}">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
-                    <div class="card-body">
-                      <h5 class="card-title">Driving Exam</h5>
-                      <p class="card-text">This is the content of Card 2.</p>
-                    </div>
-            </a>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        {% for category in categories %}
+        <div class="col-md-6">
+          <div class="card" style="margin: 5px;">
+            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <h5 class="card-header">{{ category }}</h5>
+            <div class="card-body" style="height: 150px;">
+              <p class="card-text" style="color: black;">{{ category.description }}</p>
+             
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'index' category.id %}" class="btn" style="background-color: #009688;">View Questions</a>
+
             </div>
           </div>
-      <div class="col-sm-4" style="padding: 20px">
-        <a href="">
-            <div class="card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
-                <div class="card-body">
-                  <h5 class="card-title">Card 2</h5>
-                  <p class="card-text">This is the content of Card 2.</p>
-                </div>
-        </a>
         </div>
-      </div>
-      <div class="col-sm-4" style="padding: 20px">
-        <div class="card">
-          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
-          <div class="card-body">
-            <h5 class="card-title">Driving Exam</h5>
-            <p class="card-text">This is the content of Card 3.</p>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4" style="padding: 20px">
-            <div class="card">
-          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
-          <div class="card-body">
-            <h5 class="card-title">Card 4</h5>
-            <p class="card-text">This is the content of Card 4.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4" style="padding: 20px">
-        <div class="card">
-          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
-          <div class="card-body">
-            <h5 class="card-title">Card 5</h5>
-            <p class="card-text">This is the content of Card 5.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4" style="padding: 20px">
-        <div class="card">
-          <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
-          <div class="card-body">
-            <h5 class="card-title">Card 6</h5>
-            <p class="card-text">This is the content of Card 6.</p>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-4">
+
     </div>
   </div>
-
+</div>
 {% endblock %}
