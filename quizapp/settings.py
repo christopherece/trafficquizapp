@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-auva=2&0q0op*!zeamd221*ylws9o1p-jazw=-@8+@v$j#-s62
 DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.10.55', 'localhost','192.168.10.135','192.168.10.248','preparedrivingnz.balaydalakay.com']
+CSRF_TRUSTED_ORIGINS = ['https://preparedrivingnz.balaydalakay.com/']
 
 
 # Application definition
