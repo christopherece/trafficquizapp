@@ -7,7 +7,7 @@ import random
 def index(request, category):
     questions = list(Question.objects.filter(category_id=category))
     random.shuffle(questions)
-    random_questions = questions[:15]  # Change the number (5) to the desired number of random questions to display
+    random_questions = questions[:5]  # Change the number (5) to the desired number of random questions to display
 
     context = {
         'questions': random_questions
